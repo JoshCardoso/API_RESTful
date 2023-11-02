@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Histotico>
  */
-class HistoticoFactory extends Factory
+class HistoricoFactory extends Factory
 {
     /**
      * Define the model's default state.

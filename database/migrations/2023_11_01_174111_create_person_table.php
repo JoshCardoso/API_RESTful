@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('histoticos', function (Blueprint $table) {
+        Schema::create('persons', function (Blueprint $table) {
             $table->id();
-            $table->string('historico');
-            $table->integer('id_usuario');
-            $table->date('data');
-            $table->string('hora');
-            $table->string('ip');
-            $table->string('navedador');
-            $table->string('usuario');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('apelido');
             $table->timestamps();
+            $table->string('usuariocreate');
+            $table->string('usuariomodification');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('histoticos');
+        Schema::dropIfExists('persons');
     }
 };

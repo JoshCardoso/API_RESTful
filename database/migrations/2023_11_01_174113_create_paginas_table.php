@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
+        Schema::create('paginas', function (Blueprint $table) {
             $table->id();
-            $table->string('idpagina');
-            $table->string('idrole');
-            $table->string('description');
+            $table->date('date');
+            $table->string('url');
+            $table->string('estado');
+            $table->string('nome');
+            $table->string('descripcion');
+            $table->string('icone');
+            $table->string('tipo');
             $table->timestamps();
             $table->string('usuariocreate');
             $table->string('usuariomodification');
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::dropIfExists('paginas');
     }
 };

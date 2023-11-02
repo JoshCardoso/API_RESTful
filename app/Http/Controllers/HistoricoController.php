@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Histotico;
+use App\Models\Historico;
 use Illuminate\Http\Request;
 
-class HistoticoController extends Controller
+class HistoricoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class HistoticoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Histotico $histotico)
+    public function show(Historico $histotico)
     {
         //
     }
@@ -42,7 +42,7 @@ class HistoticoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Histotico $histotico)
+    public function edit(Historico $histotico)
     {
         //
     }
@@ -50,7 +50,7 @@ class HistoticoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Histotico $histotico)
+    public function update(Request $request, Historico $histotico)
     {
         //
     }
@@ -58,7 +58,7 @@ class HistoticoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Histotico $histotico)
+    public function destroy(Historico $histotico)
     {
         //
     }
