@@ -7,59 +7,58 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $role = Role::all();
+        return response()->json($role, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'role'=> 'required',
+            'usuariocreate'=> 'required',
+            'usuariomodification'=> 'required'
+        ]);
+
+        try {
+            $dados = $request->only(['role','usuariocreate','usuariomodification']);
+            $role = Role::create($dados);
+
+            return response()->json($role, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao criar o registro.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
+    public function show(string $id)
     {
-        //
+        $role = Role::find($id);
+        return response()->json($role, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'role'=> 'required',
+            'usuariocreate'=> 'required',
+            'usuariomodification'=> 'required'
+        ]);
+
+        $role = Role::find($id);
+        if (!$role) {
+            return response()->json(['message' => 'Role not found'], 404);
+        }
+
+        $dadosUp = $request->only(['role','usuariocreate','usuariomodification']);
+        $role->update($dadosUp);
+
+        return response()->json($role);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Role $role)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
-    {
-        //
+        $role = Role::find($id);
+        $role->delete();
     }
 }

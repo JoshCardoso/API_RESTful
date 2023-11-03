@@ -12,6 +12,6 @@ class HistoricoSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Historico::factory(20)->create();
     }
 }

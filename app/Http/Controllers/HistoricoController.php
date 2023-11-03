@@ -7,59 +7,64 @@ use Illuminate\Http\Request;
 
 class HistoricoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $historico = Historico::all();
+        return response()->json($historico, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'idrole'=>'required',
+            'idpagina' => 'required',
+            'description' => 'required',
+            'hora'=> 'required',
+            'usuariocreate' => 'required',
+            'usuariomodification' => 'required']);
+
+        try {
+            $dados = $request->only(['idrole','idpagina','hora','description','usuariocreate','usuariomodification']);
+            $historico = Historico::create($dados);
+
+            return response()->json($historico, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao criar o registro.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Historico $histotico)
+    public function show(string $id)
     {
-        //
+        $historico = Historico::find($id);
+        return response()->json($historico, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Historico $histotico)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+        'idrole'=> 'required',
+        'idpagina' => 'required',
+        'description' => 'required',
+        'hora'=> 'required',
+        'usuariocreate' => 'required',
+        'usuariomodification' => 'required']);
+
+        $historico = Historico::find($id);
+        if (!$historico) {
+            return response()->json(['message' => 'Historico not found'], 404);
+        }
+
+        $dadosUp = $request->only(['idrole','idpagina','description','hora','usuariocreate','usuariomodification']);
+        $historico->update($dadosUp);
+
+        return response()->json($historico);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Historico $histotico)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Historico $histotico)
-    {
-        //
+        $historico = Historico::find($id);
+        $historico->delete();
     }
 }
+
+

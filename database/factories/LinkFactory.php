@@ -20,8 +20,8 @@ class LinkFactory extends Factory
             'idrole'=>random_int(1,20),
             'idpagina'=>random_int(1,20),
             'description'=>fake()->paragraph(),
-            'usuariocreate'=>fake()->date(),
-            'usuariomodification'=>fake()->date()
+            'usuariocreate'=>random_int(1,20),
+            'usuariomodification'=>random_int(1,20)
         ];
     }
 }

@@ -18,12 +18,12 @@ class HistoricoFactory extends Factory
     {
         return [
             'historico'=>fake()->url(),
-            'id_usuario' => random_int(1,20),
+            'idusuario' => random_int(1,20),
             'data'=>fake()->date(),
             'hora'=>fake()->time(),
             'ip'=>'127.0.0.1',
             'navedador'=>'Google Chrome',
-            'usuario'=>'?'
+            'usuario'=>fake()->name()
         ];
     }
 }

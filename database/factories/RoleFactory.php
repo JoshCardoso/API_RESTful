@@ -18,8 +18,8 @@ class RoleFactory extends Factory
     {
         return [
             'role'=>fake()->name(),
-            'usuariocreate'=>fake()->date(),
-            'usuariomodification'=>fake()->date()
+            'usuariocreate'=>random_int(1,20),
+            'usuariomodification'=>random_int(1,20)
         ];
     }
 }

@@ -17,12 +17,11 @@ class PersonFactory extends Factory
     public function definition(): array
     {
         return [
-            'idperson'=>random_int(1,20),
             'firstname'=>fake()->name(),
             'lastname'=>fake()->name(),
             'apelido'=>fake()->name(),
-            'usuariocreate'=>fake()->date(),
-            'usuariomodification'=>fake()->date()
+            'usuariocreate'=>random_int(1,20),
+            'usuariomodification'=>random_int(1,20)
         ];
     }
 }

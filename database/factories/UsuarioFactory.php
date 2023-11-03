@@ -20,11 +20,11 @@ class UsuarioFactory extends Factory
             'idperson'=>random_int(1,20),
             'usuario'=>fake()->name(),
             'password'=>fake()->password(),
-            'habilitado'=>'?',
+            'habilitado'=>'activo',
             'date'=>fake()->date(),
             'idrole'=>random_int(1,20),
-            'usuariocreate'=>fake()->date(),
-            'usuariomodification'=>fake()->date()
+            'usuariocreate'=>random_int(1,20),
+            'usuariomodification'=>random_int(1,20)
         ];
     }
 }

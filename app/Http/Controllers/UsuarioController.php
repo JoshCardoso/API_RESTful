@@ -7,59 +7,75 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $usuario = Usuario::all();
+        return response()->json($usuario, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        return var_dump($request);
+        $request->validate([
+            'idperson' => 'required',
+            'usuario' => 'required',
+            'password' => 'required',
+            'habilitado' => 'required',
+            'date' => 'required',
+            'idrole' => 'required',
+            'usuariocreate' => 'required',
+            'usuariomodification' => 'required',
+
+        ]);
+
+        try {
+            $dados = $request->only([
+                'idperson',
+                'usuario',
+                'password',
+                'habilitado',
+                'date',
+                'idrole',
+                'usuariocreate',
+                'usuariomodification',
+            ]);
+            $usuario = Usuario::create($dados);
+
+            return response()->json($usuario, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao criar o registro.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Usuario $usuario)
+    public function show(Request $request, string $id)
     {
-        //
+        $usuario = Usuario::find($id);
+        return response()->json($usuario, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Usuario $usuario)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'apelido' => 'required',
+            'usuariocreate' => 'required',
+            'usuariomodification' => 'required'
+        ]);
+
+        $usuario = Usuario::find($id);
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario not found'], 404);
+        }
+
+        $dadosUp = $request->only(['firstname', 'lastname', 'apelido', 'usuariocreate', 'usuariomodification']);
+        $usuario->update($dadosUp);
+
+        return response()->json($usuario);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Usuario $usuario)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Usuario $usuario)
-    {
-        //
+        $usuario = Usuario::find($id);
+        $usuario->delete();
     }
 }

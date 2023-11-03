@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('idpagina')->references('id')->on('paginas')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('idrole');
             $table->foreign('idrole')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
             $table->string('usuariocreate');
             $table->string('usuariomodification');

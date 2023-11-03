@@ -7,59 +7,72 @@ use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $link = Link::all();
+        return response()->json($link, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
+{
+    $request->validate([
+        'historico' => 'required',
+        'data' => 'required',
+        'hora' => 'required',
+        'usuario' => 'required'
+    ]);
+
+    try {
+
+        $ip = $request->ip();
+        $navegador = $request->server('HTTP_USER_AGENT');
+
+        $dados = $request->only(['historico', 'data', 'hora', 'usuario']);
+        $dados['ip'] = $ip;
+        $dados['navegador'] = $navegador;
+
+        $link = Link::create($dados);
+
+        return response()->json($link, 201);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erro ao criar o registro.'], 500);
+    }
+}
+
+
+    public function show(string $id)
     {
-        //
+        $link = Link::find($id);
+        return response()->json($link, 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Link $link)
-    {
-        //
+    public function update(Request $request, string $id)
+{
+    $request->validate([
+        'historico' => 'required',
+        'idusuario' => 'required',
+        'data' => 'required',
+        'hora' => 'required',
+        'ip' => 'required',
+        'navegador' => 'required',
+        'usuario' => 'required'
+    ]);
+
+    $link = Link::find($id);
+    if (!$link) {
+        return response()->json(['message' => 'Link not found'], 404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Link $link)
-    {
-        //
-    }
+    $dadosUp = $request->only(['historico', 'idusuario', 'data', 'hora', 'ip', 'navegador', 'usuario']);
+    $link->update($dadosUp);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Link $link)
-    {
-        //
-    }
+    return response()->json($link);
+}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Link $link)
+
+    public function destroy(string $id)
     {
-        //
+        $link = Link::find($id);
+        $link->delete();
     }
 }

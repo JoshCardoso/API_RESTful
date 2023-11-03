@@ -7,59 +7,71 @@ use Illuminate\Http\Request;
 
 class PaginaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $pagina = Pagina::all();
+        return response()->json($pagina, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'usuariocreate' => 'required',
+            'usuariomodification' => 'required',
+            'url' => 'required',
+            'estado' => 'required',
+            'nome' => 'required',
+            'descripcion' => 'required',
+            'icone' => 'required',
+            'tipo' => 'required'
+        ]);
+
+        try {
+            $dados = $request->only(['date','usuariocreate','usuariomodification','url','estado','nome','descripcion','icone','tipo']);
+            $pagina = Pagina::create($dados);
+
+            return response()->json($pagina, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao criar o registro.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pagina $pagina)
+    public function show(Request $request, string $id)
     {
-        //
+        $pagina = Pagina::find($id);
+        return response()->json($pagina, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pagina $pagina)
+    public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'usuariocreate' => 'required',
+            'usuariomodification' => 'required',
+            'url' => 'required',
+            'estado' => 'required',
+            'nome' => 'required',
+            'descripcion' => 'required',
+            'icone' => 'required',
+            'tipo' => 'required'
+        ]);
+
+        $pagina = Pagina::find($id);
+        if (!$pagina) {
+            return response()->json(['message' => 'Pagina not found'], 404);
+        }
+
+        $dadosUp = $request->only(['date','usuariocreate','usuariomodification','url','estado','nome','descripcion','icone','tipo'
+        ]);
+        $pagina->update($dadosUp);
+
+        return response()->json($pagina);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pagina $pagina)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pagina $pagina)
-    {
-        //
+        $pagina = Pagina::find($id);
+        $pagina->delete();
     }
 }

@@ -18,8 +18,8 @@ class PaginaFactory extends Factory
     {
         return [
             'date' => fake()->date(),
-            'usuariocreacion' => fake()->date(),
-            'usuariomodificacion'=> fake()->date(),
+            'usuariocreate' => random_int(1,20),
+            'usuariomodification'=> random_int(1,20),
             'url' => '/teste',
             'estado'=> 'ativo',
             'nome'=> fake()->name(),
